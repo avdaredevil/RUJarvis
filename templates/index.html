@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<!--
+	Overflow 1.1 by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>{{title}}</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic" rel="stylesheet" type="text/css" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/jquery.poptrox.min.js"></script>
+		<script src="/js/skel.min.js"></script>
+		<script src="/js/init.js"></script>
+		<script>
+           function submit() {
+                var query = document.getElementById('query').value;
+                if (query.trim() == "") {alert('Bad Query Buddy!');document.getElementById('query').value = "";return;}
+                window.location.href = "/query/"+encodeURI(query);
+            }
+            $(document).ready(function() {
+                $('#query').keydown(function(event) {
+                    if (event.keyCode == 13) {
+                        submit();
+                        return false;
+                     }
+                });
+            });
+		</script>
+		<noscript>
+			<link rel="stylesheet" href="/css/skel-noscript.css" />
+			<link rel="stylesheet" href="/css/style.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+            <p align="right" class="about" style="right: .8em;position:absolute;z-index:100;" onclick="window.location.href = 'about'">About Us</p>
+			<section id="header">
+				<header>
+					<h1>RU JARVIS</h1>
+					<p>AI Enabled Navigation System</p>
+				</header>
+				<footer>
+                    <div class="row"><div class="12u"><input type="text" id="query" class="text" name="query" style="width:28em;text-align:center;" placeholder="Enter Your Query Here" /></div></div>
+					<br/>
+					<a href="#" onclick="submit()" class="button style2 scrolly scrolly-centered">Get Me Directions!</a>
+				</footer>
+			</section>
+		
+		<section id="footer">
+			<ul class="icons">
+				<li><a href="#" class="fa fa-twitter solo"><span>Twitter</span></a></li>
+				<li><a href="#" class="fa fa-facebook solo"><span>Facebook</span></a></li>
+				<li><a href="#" class="fa fa-google-plus solo"><span>Google+</span></a></li>
+				<li><a href="#" class="fa fa-pinterest solo"><span>Pinterest</span></a></li>
+				<li><a href="#" class="fa fa-dribbble solo"><span>Dribbble</span></a></li>
+				<li><a href="#" class="fa fa-linkedin solo"><span>LinkedIn</span></a></li>
+			</ul>
+			<div class="copyright">
+				<ul class="menu">
+					<li>A Hackathon Project.</li>
+					<li>Design: <a href="http://www.linkedin.com/in/apoorvverma/">Apoorv Verma</a></li>
+				</ul>
+			</div>
+		</section>
+
+	</body>
+</html>

@@ -1,0 +1,242 @@
+[
+    {
+        "Name":  "Allison Road Classrooms",
+        "Abbrev":  [
+                       "allison",
+                       "allison_a"
+                   ]
+    },
+    {
+        "Name":  "Biel Road",
+        "Abbrev":  [
+                       "biel"
+                   ]
+    },
+    {
+        "Name":  "Bravo Supermarket",
+        "Abbrev":  [
+                       "newstree"
+                   ]
+    },
+    {
+        "Name":  "Buell Apartments",
+        "Abbrev":  [
+                       "buells",
+                       "buel"
+                   ]
+    },
+    {
+        "Name":  "Busch Campus Center",
+        "Abbrev":  [
+                       "busch_a",
+                       "busch"
+                   ]
+    },
+    {
+        "Name":  "Busch Suites",
+        "Abbrev":  [
+                       "buschse"
+                   ]
+    },
+    {
+        "Name":  "Cabaret Theatre",
+        "Abbrev":  [
+                       "cabaret"
+                   ]
+    },
+    {
+        "Name":  "College Hall",
+        "Abbrev":  [
+                       "college_a",
+                       "college"
+                   ]
+    },
+    {
+        "Name":  "Colony House",
+        "Abbrev":  [
+                       "colony"
+                   ]
+    },
+    {
+        "Name":  "Davidson Hall",
+        "Abbrev":  [
+                       "davidson"
+                   ]
+    },
+    {
+        "Name":  "Food Sciences Building",
+        "Abbrev":  [
+                       "foodsci"
+                   ]
+    },
+    {
+        "Name":  "Gibbons",
+        "Abbrev":  [
+                       "gibbons"
+                   ]
+    },
+    {
+        "Name":  "Henderson",
+        "Abbrev":  [
+                       "henders"
+                   ]
+    },
+    {
+        "Name":  "Hill Center",
+        "Abbrev":  [
+                       "hillw",
+                       "hilln"
+                   ]
+    },
+    {
+        "Name":  "Katzenbach",
+        "Abbrev":  [
+                       "katzenbach"
+                   ]
+    },
+    {
+        "Name":  "Liberty Street",
+        "Abbrev":  [
+                       "liberty"
+                   ]
+    },
+    {
+        "Name":  "Library of Science",
+        "Abbrev":  [
+                       "libofsciw",
+                       "libofsci"
+                   ]
+    },
+    {
+        "Name":  "Lipman Hall",
+        "Abbrev":  [
+                       "lipman"
+                   ]
+    },
+    {
+        "Name":  "Livingston Plaza",
+        "Abbrev":  [
+                       "beck"
+                   ]
+    },
+    {
+        "Name":  "Livingston Student Center",
+        "Abbrev":  [
+                       "livingston_a",
+                       "livingston"
+                   ]
+    },
+    {
+        "Name":  "Nursing School",
+        "Abbrev":  [
+                       "nursscho"
+                   ]
+    },
+    {
+        "Name":  "Paterson Street",
+        "Abbrev":  [
+                       "patersons",
+                       "patersonn"
+                   ]
+    },
+    {
+        "Name":  "Public Safety Building North",
+        "Abbrev":  [
+                       "pubsafn"
+                   ]
+    },
+    {
+        "Name":  "Public Safety Building South",
+        "Abbrev":  [
+                       "pubsafs"
+                   ]
+    },
+    {
+        "Name":  "Quads",
+        "Abbrev":  [
+                       "quads"
+                   ]
+    },
+    {
+        "Name":  "Red Oak Lane",
+        "Abbrev":  [
+                       "redoak_a",
+                       "redoak"
+                   ]
+    },
+    {
+        "Name":  "Rockoff Hall",
+        "Abbrev":  [
+                       "rockoff",
+                       "rockhall"
+                   ]
+    },
+    {
+        "Name":  "Rutgers Student Center",
+        "Abbrev":  [
+                       "rutgerss_a",
+                       "rutgerss"
+                   ]
+    },
+    {
+        "Name":  "Science Building",
+        "Abbrev":  [
+                       "science"
+                   ]
+    },
+    {
+        "Name":  "Scott Hall",
+        "Abbrev":  [
+                       "scott"
+                   ]
+    },
+    {
+        "Name":  "Stadium",
+        "Abbrev":  [
+                       "stadium_a"
+                   ]
+    },
+    {
+        "Name":  "Student Activities Center",
+        "Abbrev":  [
+                       "stuactcntr",
+                       "stuactcntrs",
+                       "stuactcntrn_2",
+                       "stuactcntrn"
+                   ]
+    },
+    {
+        "Name":  "Train Station",
+        "Abbrev":  [
+                       "traine",
+                       "trainn_a",
+                       "traine_a",
+                       "trainn"
+                   ]
+    },
+    {
+        "Name":  "Visitor Center",
+        "Abbrev":  [
+                       "lot48a"
+                   ]
+    },
+    {
+        "Name":  "Werblin Back Entrance",
+        "Abbrev":  [
+                       "werblinback"
+                   ]
+    },
+    {
+        "Name":  "Werblin Main Entrance",
+        "Abbrev":  [
+                       "werblinm"
+                   ]
+    },
+    {
+        "Name":  "Zimmerli Arts Museum",
+        "Abbrev":  [
+                       "zimmerli",
+                       "zimmerli_2"
+                   ]
+    }
+]

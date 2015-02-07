@@ -8,11 +8,12 @@ makeDiGraph()
 SharedMem = ""
 title = "RU Jarvis - AI Navigation System"
 app = Flask("app")
+stops = json.load(open('stops.ap.json'))
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html", title=title)
+    return render_template("index.html", title=title,stops=stops)
 
 @app.route('/about')
 def abt():

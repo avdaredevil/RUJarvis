@@ -17,10 +17,13 @@
 		<script src="/js/skel.min.js"></script>
 		<script src="/js/init.js"></script>
 		<script>
-           function submit() {
-                var query = document.getElementById('query').value;
-                if (query.trim() == "") {alert('Bad Query Buddy!');document.getElementById('query').value = "";return;}
-                window.location.href = "/query/"+encodeURI(query);
+           function RUJarvis() {
+                if (!$("input[name='start']").val().trim()||!$("input[name='dest']").val().trim()) {alert('Bad Query Buddy!');return;}
+                $.ajax({
+                    type: "POST",
+                    url: "solve",
+                    data: $('.stops>input').serialize()
+                });
             }
             $(document).ready(function() {
                 $('#query').keydown(function(event) {
@@ -38,21 +41,27 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
 	<body>
-
 		<!-- Header -->
-            <p align="right" class="about" style="right: .8em;position:absolute;z-index:100;" onclick="window.location.href = 'about'">About Us</p>
-			<section id="header">
-				<header>
-					<h1>RU JARVIS</h1>
-					<p>AI Enabled Navigation System</p>
-				</header>
-				<footer>
-                    <div class="row"><div class="12u"><input type="text" id="query" class="text" name="query" style="width:28em;text-align:center;" placeholder="Enter Your Query Here" /></div></div>
-					<br/>
-					<a href="#" onclick="submit()" class="button style2 scrolly scrolly-centered">Get Me Directions!</a>
-				</footer>
-			</section>
-		
+        <p align="right" class="about" style="right: .8em;position:absolute;z-index:100;" onclick="window.location.href = 'about'">About Us</p>
+        <section id="header">
+            <header>
+                <h1>RU JARVIS</h1>
+                <p>AI Enabled Navigation System</p>
+            </header>
+            <footer>
+                <div class="row"><div class="12u stops">
+                    <input list="bus_stops" name="start" placeholder="Source" />
+                    <input list="bus_stops" name="dest"  placeholder="Destination" />
+                    <datalist id="bus_stops">
+                        {%for stop in stops%}
+                            <option name="{{stop.Abbrev}}" value="{{stop.Abbrev[0]}}">{{stop.Name}}</option>
+                        {%endfor%}
+                    </datalist>
+                </div></div>
+                <br/>
+                <a href="#" onclick="RUJarvis()" class="button style2 scrolly scrolly-centered">Get Me Directions!</a>
+            </footer>
+        </section>
 		<section id="footer">
 			<ul class="icons">
 				<li><a href="#" class="fa fa-twitter solo"><span>Twitter</span></a></li>
@@ -69,6 +78,5 @@
 				</ul>
 			</div>
 		</section>
-
 	</body>
 </html>

@@ -5,10 +5,16 @@ from pprint import pprint
 import simplejson, urllib
 import json
 from pygeocoder import Geocoder
+import requests
 
 #open json file
 json_data = open ('Redirecting.json')
 data = json.load(json_data)
+
+def gettime(f_lat, f_lon, s_lat, s_lon):
+	ap_api_key = "AuhAQe-eO4hV_5ngO8fui3TM_eIKTRXUwGQH4IA-62-9zPjBDIQh13aJnDom3wR3"
+	ap_result = requests.get("http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0="+str(f_lat)+" "+str(f_lon)+"&wp.1="+str(s_lat)+" "+str(s_lon)+"&du=mi&key="+ap_api_key)
+	return (ap_result.json())['resourceSets'][0]['resources'][0]['travelDuration']
 
 def makeDiGraph():
 	DG = nx.DiGraph()
@@ -29,11 +35,9 @@ def makeDiGraph():
 			first_lon = data['stops'][first_stop]["lon"]
 			second_lat = data['stops'][second_stop]["lat"]
 			second_lon =  data['stops'][second_stop]["lon"]
-
-			DG.add_edge(first_stop,second_stop)
+			weight_edge = gettime(first_lat, first_lon, second_lat, second_lon)
+			DG.add_edge(first_stop,second_stop, weight= weight_edge)	
 	return DG
-
-
 
 def findroutes(DG, init_dest, final_dest):
 	num = 0
@@ -43,9 +47,10 @@ def findroutes(DG, init_dest, final_dest):
 		path_mod = list(path)
 		num = len(path_mod)
 		count= count+1
-		
+	return path_mod		
 	
-	
+
+
 def get_best_path():
 	DG = makeDiGraph()
 

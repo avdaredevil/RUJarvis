@@ -22,7 +22,6 @@ def makeDiGraph():
         #DG[stops]['lat'] = data["stops"][stops]['lat']
         #DG[stops]['lon'] = data["stops"][stops]['lon']
         #DG[stops]['routes'] = data["stops"][stops]['routes']
-//Hi blah blah blah I was here!!!!!!!!!!!!!!!!!!!!!        
     #read edge weights
     weights = []
     f = open("durations.txt", 'r')

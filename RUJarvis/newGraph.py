@@ -48,11 +48,26 @@ def findroutes(DG, init_dest, final_dest):
 		num = len(path_mod)
 		count= count+1
 	return path_mod		
-	
+
+def calculate_optimum_path(paths):
+        time = 0
+        first = 0
+        second = 1
+        length = len(paths)
+        for x in range(0,length):
+                curr_path = paths[x]
+                for y in range(0,length-1):
+                        first_stop = curr_path[y]
+                        common_busses = set(first_stop).intersection(curr_path[y+1])
+                        for z in range(0,len(common_busses)):
+                                next_bus(first_stop, common_busses)
+                        #final_busses = set(data["stops"][curr_path[y]]['routes']).intersection(common_busses)
 
 
-def get_best_path():
+
+def get_best_path(init_dest, final_dest):
 	DG = makeDiGraph()
+        paths = findroutes(DG, init_dest, final_dest) 
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ function Diffr($times,$ind) {
     Write-AP ">*Recieved Time: $(Print-List $times[$ind-1].predictions.seconds)"
     $src = $times[$ind-1].predictions.seconds[0]
     while (!$times[$ind].predictions) {Write-AP ">!Skipping intermediate stop [$($Stops[$ind])]";if (++$ind -ge $times.length) {return "NA"}}
-    $times[$ind].predictions.seconds | foreach {if ($_ - $src -ge 60) {return $_-$src}}
+    $times[$ind].predictions.seconds | foreach {if (($_-$src) -ge 60) {return $_-$src}}
     return "WADDA_Fuck"
 }
 function Gen-DataPoint($stops,$time,$rt) {

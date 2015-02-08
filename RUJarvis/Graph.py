@@ -24,10 +24,6 @@ def makeDiGraph():
 	temp = data["stops"][stops]
 	stop_hash[stops] = {"title":temp['title'], "lat":temp['lat'], "lon":temp['lon'], "routes":temp['routes']}
         DG.add_node(stops)
-        #DG[stops]['title'] = data["stops"][stops]['title']
-        #DG[stops]['lat'] = data["stops"][stops]['lat']
-        #DG[stops]['lon'] = data["stops"][stops]['lon']
-        #DG[stops]['routes'] = data["stops"][stops]['routes']
 
     #read edge weights
     weights = []
@@ -39,6 +35,7 @@ def makeDiGraph():
     #create the edges for each route
     sum = 0
     for routes in data["routes"]:
+	temp = data["routes"][routes] 
         for i in range( len(data["routes"][routes]['stops'])):
             DG.add_edge(data["routes"][routes]['stops'][i], data["routes"][routes]['stops'][(i+1)%len(data["routes"][routes]['stops'])],edge_weight = weights[sum])
             sum = sum +1

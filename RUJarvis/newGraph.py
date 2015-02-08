@@ -6,7 +6,7 @@ import simplejson, urllib
 import json
 from pygeocoder import Geocoder
 import requests
-
+from networkx.readwrite import json_graph
 #open json file
 json_data = open ('Redirecting.json')
 data = json.load(json_data)
@@ -47,7 +47,7 @@ def findroutes(DG, init_dest, final_dest):
 	count =1
 	while(num < 4):
 		paths = all_simple_paths(DG, init_dest, final_dest,count)
-		path_mod = list(path)
+		path_mod = list(paths)
 		num = len(path_mod)
 		count= count+1
 	return path_mod		
@@ -57,17 +57,20 @@ def calculate_optimum_path(paths):
         second = 1
         length = len(paths)
 	best_path = []
-        for x in range(0,length-1):
-                curr_path = paths[x]
-		best_all = []
-                for y in range(0,length-2):
-                        first_stop = curr_path[y]
-                        common_busses = set(first_stop).intersection(curr_path[y+1])
-			bus = ap_best_bus(first_stop, common_busses,DAT)
-			max_ap = DAT = bus['time']+DG[first_stop][curr_path[y+1]]['weight']
-			best_all.append(bus)
-                        #final_busses = set(data["stops"][curr_path[y]]['routes']).intersection(common_busses)
-		if super_min > DAT: super_min = DAT;best_path = best_all
+	for x in range(0,length-1):
+		try:
+                	curr_path = paths[x]
+			best_all = []
+                	for y in range(0,length-2):
+                	        first_stop = curr_path[y]
+                	        common_busses = set(first_stop).intersection(curr_path[y+1])
+				bus = ap_best_bus(first_stop, common_busses,DAT)
+				if not bus: raise StopIteration
+				max_ap = DAT = bus['time']+DG[first_stop][curr_path[y+1]]['weight']
+				best_all.append(bus)
+                	        #final_busses = set(data["stops"][curr_path[y]]['routes']).intersection(common_busses)
+			if super_min > DAT: super_min = DAT;best_path = best_all
+		except StopIteration: pass
 	return best_path
 
 def ap_best_bus(stop,buses,durationAt=0):
@@ -86,10 +89,15 @@ def fetchMinPred(preds, DAT):
 
 def get_best_path(init_dest, final_dest):
 	DG = makeDiGraph()
+#	DG =json.load("ap_graph.json")
+#	DG = json_graph.loads(open("ap_graph.json"))
         paths = findroutes(DG, init_dest, final_dest) 
-
+	best_path = calculate_optimum_path(paths)
+	return best_path
 
 if __name__ == "__main__":
 	init_dest = "hilln"
 	final_dest = "scott"
-	get_best_path(init_dest, final_dest)
+	best_path = get_best_path(init_dest, final_dest)
+	
+	print {Stops:best_path}

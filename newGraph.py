@@ -13,7 +13,7 @@ from networkx.readwrite import json_graph
 json_data = open ('data/Redirecting.json')
 data = json.load(json_data)
 
-lookup_bus = { "Weekend 1":"wknd1" , "Weekend 2":"wknd2" , "A": "a", "B": "b", "C": "c", "REX L" :"rexl", "REX B": "rexb", "LX" : "lx" , "H": "h", "F":"f" }
+lookup_bus = { "Weekend 1":"wknd1" , "Weekend 2":"wknd2" , "A": "a", "B": "b", "C": "c", "REX L" :"rexl", "REX B": "rexb", "LX" : "lx" , "H": "h", "F":"f","EE":"ee","New Brunsquick 1 Shuttle":"w1"}
 lookup_stops = { "Library of Science": "libofsci" , "Visitor Center": "lot48a" , "Scott Hall": "scott" , "Train Station": "traine_a" , "College Hall": "college_a" , "Cabaret Theatre": "cabaret" , "Busch Campus Center": "busch" , "Allison Road Classrooms": "allison_a" , "Busch Campus Center": "busch_a" , "Hill Center": "hillw" , "Red Oak Lane": "redoak_a" , "Library of Science": "libofsciw" , "Bravo Supermarket": "newstree" , "Busch Suites": "buschse" , "Student Activities Center": "stuactcntrs" , "Nursing School": "nursscho" , "Zimmerli Arts Museum": "zimmerli_2" , "Liberty Street": "liberty" , "Gibbons": "gibbons" , "Biel Road": "biel" , "Livingston Student Center": "livingston_a" , "Katzenbach": "katzenbach" , "Student Activities Center": "stuactcntrn" , "Hill Center": "hilln" , "Rockoff Hall": "rockhall" , "Davidson Hall": "davidson" , "Paterson Street": "patersons" , "Rutgers Student Center": "rutgerss" , "College Hall": "college" , "Lipman Hall": "lipman" , "Quads": "quads" , "Colony House": "colony" , "Henderson": "henders" , "Stadium": "stadium_a" , "Livingston Plaza": "beck" , "Werblin Back Entrance": "werblinback" , "Red Oak Lane": "redoak" , "Zimmerli Arts Museum": "zimmerli" , "Student Activities Center": "stuactcntrn_2" , "Food Sciences Building": "foodsci" , "Rutgers Student Center": "rutgerss_a" , "Train Station": "traine" , "Paterson Street": "patersonn" , "Student Activities Center": "stuactcntr" , "Science Building": "science" , "Werblin Main Entrance": "werblinm" , "Public Safety Building South": "pubsafs" , "Rockoff Hall": "rockoff" , "Allison Road Classrooms": "allison" , "Livingston Student Center": "livingston" , "Train Station": "trainn_a" , "Buell Apartments": "buells" , "Public Safety Building North": "pubsafn" , "Buell Apartments": "buel" , "Train Station": "trainn" }
 
 def gettime(f_lat, f_lon, s_lat, s_lon):
@@ -60,34 +60,35 @@ def findroutes(DG, init_dest, final_dest):
 		count= count+1
 	return path_mod		
 
-def calculate_optimum_path(paths):
+def calculate_optimum_path(DG,paths):
 	super_min = 10000000;first = 0;DAT = 0
 	second = 1
-	length = len(paths)
 	best_path = []
-	for x in range(0,length-1):
+	for x in range(0,len(paths)-1):
 		try:
 			curr_path = paths[x]
 			best_all = []
-			for y in range(0,length-2):
+			for y in range(0,len(curr_path)-2):
 				first_stop = curr_path[y]
 				common_busses = set(first_stop).intersection(curr_path[y+1])
-				bus = ap_best_bus(first_stop, common_busses,DAT)
+				bus = ap_best_bus(first_stop,common_busses,DAT)
+				return {'Current':curr_path,'Stop':first_stop,'Common':list(common_busses),'Bus':bus}
 				if not bus: raise StopIteration
-				max_ap = DAT = bus['time']+DG[first_stop][curr_path[y+1]]['weight']
+				max_ap = DAT = float(bus['time'])+DG[first_stop][curr_path[y+1]]['weight']
 				best_all.append(bus)
 				#final_busses = set(data["stops"][curr_path[y]]['routes']).intersection(common_busses)
+			return {'Stops':best_all,'Time':DAT,'SuperMin':super_min}
 			if super_min > DAT: super_min = DAT;best_path = best_all
 		except StopIteration: pass
-	return best_path
+	return {'Stops': best_path,'Time': DAT}
 
 def ap_best_bus(stop,buses,durationAt=0):
 	url = "http://runextbus.heroku.com/stop/{0}".format(str(stop))
 	res = json.load(urllib.urlopen(url))
 	minb = {}
 	for bus in res:
-		if not lookup_bus[bus['title']] in buses or not bus['predictions']: continue
-		if (not minb or minb['time'] > fetchMinPred(bus['predictions'],durationAt)): minb = {'bus': lookup_bus[bus['title']], 'time': bus['predictions'][0]['seconds']}
+		if not bus['predictions'] or not lookup_bus[bus['title']] in buses: continue
+		if (not minb or minb['time'] > fetchMinPred(bus['predictions'],durationAt)): minb = {'bus': lookup_bus[bus['title']], 'stop': stop, 'time': bus['predictions'][0]['seconds']}
 	return minb
 
 def fetchMinPred(preds, DAT):
@@ -100,8 +101,8 @@ def get_best_path(init_dest, final_dest):
 #	SaveGraph(DG, "data/ap_graph.json")
 	DG = LoadGraph("data/ap_graph.json")
 	paths = findroutes(DG, init_dest, final_dest) 
-	best_path = calculate_optimum_path(paths)
-	return best_path
+	best_path = calculate_optimum_path(DG,paths)
+	return json.dumps(best_path);
 
 def SaveGraph(G, fname):
 	json.dump(dict(nodes=[[n, G.node[n]] for n in G.nodes()],edges=[[u, v, G.edge[u][v]] for u,v in G.edges()]),open(fname, 'w'), indent=2)
@@ -117,4 +118,4 @@ if __name__ == "__main__":
 	init_dest = "hilln"
 	final_dest = "scott"
 	best_path = get_best_path(init_dest, final_dest)
-	print {Stops:best_path}
+	print best_path

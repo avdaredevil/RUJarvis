@@ -153,10 +153,3 @@ if __name__ == "__main__":
     final_dest = "scott" 
     get_best_path(init_dest, final_dest)    
 
-
-
-
-
-
-
-

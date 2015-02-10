@@ -1,14 +1,13 @@
 #!flask/bin/python
 
-from Graph import *
+from newGraph import *
 from flask import *
 import os
-makeDiGraph()
 
 SharedMem = ""
 title = "RU Jarvis - AI Navigation System"
 app = Flask("app")
-stops = json.load(open('stops.ap.json'))
+stops = json.load(open('data/stops.ap.json'))
 
 @app.route('/')
 @app.route('/index')

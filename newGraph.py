@@ -13,7 +13,7 @@ from networkx.readwrite import json_graph
 json_data = open ('data/Redirecting.json')
 data = json.load(json_data)
 
-lookup_bus = { "Weekend 1":"wknd1" , "Weekend 2":"wknd2" , "A": "a", "B": "b", "C": "c", "REX L" :"rexl", "REX B": "rexb", "LX" : "lx" , "H": "h", "F":"f","EE":"ee","New Brunsquick 1 Shuttle":"w1"}
+lookup_bus = { "Weekend 1":"wknd1" , "Weekend 2":"wknd2" , "A": "a", "B": "b", "C": "c", "REX L" :"rexl", "REX B": "rexb", "LX" : "lx" , "H": "h", "F":"f","EE":"ee","New Brunsquick 1 Shuttle":"w1","New Brunsquick 2 Shuttle":"w2"}
 lookup_stops = { "Library of Science": "libofsci" , "Visitor Center": "lot48a" , "Scott Hall": "scott" , "Train Station": "traine_a" , "College Hall": "college_a" , "Cabaret Theatre": "cabaret" , "Busch Campus Center": "busch" , "Allison Road Classrooms": "allison_a" , "Busch Campus Center": "busch_a" , "Hill Center": "hillw" , "Red Oak Lane": "redoak_a" , "Library of Science": "libofsciw" , "Bravo Supermarket": "newstree" , "Busch Suites": "buschse" , "Student Activities Center": "stuactcntrs" , "Nursing School": "nursscho" , "Zimmerli Arts Museum": "zimmerli_2" , "Liberty Street": "liberty" , "Gibbons": "gibbons" , "Biel Road": "biel" , "Livingston Student Center": "livingston_a" , "Katzenbach": "katzenbach" , "Student Activities Center": "stuactcntrn" , "Hill Center": "hilln" , "Rockoff Hall": "rockhall" , "Davidson Hall": "davidson" , "Paterson Street": "patersons" , "Rutgers Student Center": "rutgerss" , "College Hall": "college" , "Lipman Hall": "lipman" , "Quads": "quads" , "Colony House": "colony" , "Henderson": "henders" , "Stadium": "stadium_a" , "Livingston Plaza": "beck" , "Werblin Back Entrance": "werblinback" , "Red Oak Lane": "redoak" , "Zimmerli Arts Museum": "zimmerli" , "Student Activities Center": "stuactcntrn_2" , "Food Sciences Building": "foodsci" , "Rutgers Student Center": "rutgerss_a" , "Train Station": "traine" , "Paterson Street": "patersonn" , "Student Activities Center": "stuactcntr" , "Science Building": "science" , "Werblin Main Entrance": "werblinm" , "Public Safety Building South": "pubsafs" , "Rockoff Hall": "rockoff" , "Allison Road Classrooms": "allison" , "Livingston Student Center": "livingston" , "Train Station": "trainn_a" , "Buell Apartments": "buells" , "Public Safety Building North": "pubsafn" , "Buell Apartments": "buel" , "Train Station": "trainn" }
 
 def gettime(f_lat, f_lon, s_lat, s_lon):
@@ -70,17 +70,18 @@ def calculate_optimum_path(DG,paths):
 			best_all = []
 			for y in range(0,len(curr_path)-2):
 				first_stop = curr_path[y]
-				common_busses = set(first_stop).intersection(curr_path[y+1])
+				common_busses = set(AP_BusesAt(first_stop)).intersection(set(AP_BusesAt(curr_path[y+1])))
 				bus = ap_best_bus(first_stop,common_busses,DAT)
-				return {'Current':curr_path,'Stop':first_stop,'Common':list(common_busses),'Bus':bus}
 				if not bus: raise StopIteration
 				max_ap = DAT = float(bus['time'])+DG[first_stop][curr_path[y+1]]['weight']
 				best_all.append(bus)
 				#final_busses = set(data["stops"][curr_path[y]]['routes']).intersection(common_busses)
-			return {'Stops':best_all,'Time':DAT,'SuperMin':super_min}
 			if super_min > DAT: super_min = DAT;best_path = best_all
 		except StopIteration: pass
 	return {'Stops': best_path,'Time': DAT}
+
+def AP_BusesAt(stop):
+	return data['stops'][stop]['routes']
 
 def ap_best_bus(stop,buses,durationAt=0):
 	url = "http://runextbus.heroku.com/stop/{0}".format(str(stop))

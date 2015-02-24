@@ -85,8 +85,7 @@ def AP_BusesAt(stop):
 
 def ap_best_bus(stop,buses,durationAt=0):
 	url = "http://runextbus.heroku.com/stop/{0}".format(str(stop))
-	res = json.load(urllib.urlopen(url))
-	minb = {}
+	res = json.load(urllib.urlopen(url));minb = {}
 	for bus in res:
 		if not bus['predictions'] or not lookup_bus[bus['title']] in buses: continue
 		if (not minb or minb['time'] > fetchMinPred(bus['predictions'],durationAt)): minb = {'bus': lookup_bus[bus['title']], 'stop': stop, 'time': bus['predictions'][0]['seconds']}

@@ -61,24 +61,24 @@ def findroutes(DG, init_dest, final_dest):
 	return path_mod		
 
 def calculate_optimum_path(DG,paths):
-	super_min = 10000000;first = 0;DAT = 0
+	super_min = 10000000;first = 0
 	second = 1
 	best_path = []
 	for x in range(0,len(paths)-1):
 		try:
-			curr_path = paths[x]
+			curr_path = paths[x];ETA = 0
 			best_all = []
 			for y in range(0,len(curr_path)-2):
-				first_stop = curr_path[y]
-				common_busses = set(AP_BusesAt(first_stop)).intersection(set(AP_BusesAt(curr_path[y+1])))
-				bus = ap_best_bus(first_stop,common_busses,DAT)
+				curr_stop = curr_path[y]
+				common_busses = set(AP_BusesAt(curr_stop)).intersection(set(AP_BusesAt(curr_path[y+1])))
+				bus = ap_best_bus(curr_stop,common_busses,ETA)
 				if not bus: raise StopIteration
-				max_ap = DAT = float(bus['time'])+DG[first_stop][curr_path[y+1]]['weight']
+				max_ap = ETA = float(bus['time'])+DG[curr_stop][curr_path[y+1]]['weight']
 				best_all.append(bus)
 				#final_busses = set(data["stops"][curr_path[y]]['routes']).intersection(common_busses)
-			if super_min > DAT: super_min = DAT;best_path = best_all
+			if super_min > ETA: super_min = ETA;best_path = best_all
 		except StopIteration: pass
-	return {'Stops': best_path,'Time': DAT}
+	return {'Stops': best_path,'Time': super_min}
 
 def AP_BusesAt(stop):
 	return data['stops'][stop]['routes']

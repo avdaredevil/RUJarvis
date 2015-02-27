@@ -72,6 +72,7 @@ def calculate_optimum_path(DG,paths):
 				curr_stop = curr_path[y]
 				common_busses = set(AP_BusesAt(curr_stop)).intersection(set(AP_BusesAt(curr_path[y+1])))
 				bus = ap_best_bus(curr_stop,common_busses,ETA)
+				print "Predictions beyond accurate scope!"
 				if not bus: raise StopIteration
 				max_ap = ETA = float(bus['time'])#+DG[curr_stop][curr_path[y+1]]['weight'] --AP -Not sure why you needed this
 				if super_min<ETA: raise StopIteration
@@ -91,8 +92,9 @@ def ap_best_bus(stop,buses,durationAt=0):
 	res = json.load(urllib.urlopen(url));minb = {}
 	for bus in res:
 		if not bus['predictions'] or not lookup_bus[bus['title']] in buses: continue
+		print "Comparing "+str("true" if not minb else minb['time'])+" > "+str(fetchMinPred(bus['predictions'],durationAt))
 		if (not minb or minb['time'] > fetchMinPred(bus['predictions'],durationAt)): minb = {'bus': lookup_bus[bus['title']], 'stop': stop, 'time': int(float(bus['predictions'][0]['seconds']))}
-	return minb
+	return minb if minb and minb['time']>durationAt else {}
 
 def fetchMinPred(preds, DAT):
 	for p in preds:

@@ -74,7 +74,7 @@ def calculate_optimum_path(DG,paths):
 				bus = ap_best_bus(curr_stop,common_busses,ETA)
 				print "Predictions beyond accurate scope!"
 				if not bus: raise StopIteration
-				max_ap = ETA = float(bus['time'])#+DG[curr_stop][curr_path[y+1]]['weight'] --AP -Not sure why you needed this
+				max_ap = ETA = float(bus['time'])+DG[curr_stop][curr_path[y+1]]['weight']
 				if super_min<ETA: raise StopIteration
 				best_all.append(bus)
 				#final_busses = set(data["stops"][curr_path[y]]['routes']).intersection(common_busses)

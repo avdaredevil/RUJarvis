@@ -10,7 +10,7 @@ from networkx.readwrite import json_graph
 #==========================Imports=====END==|
 
 #open json file
-json_data = open ('data/Redirecting.json')
+json_data = open ('Data/Redirecting.json')
 data = json.load(json_data)
 
 lookup_bus = { "Weekend 1":"wknd1" , "Weekend 2":"wknd2" , "A": "a", "B": "b", "C": "c", "REX L" :"rexl", "REX B": "rexb", "LX" : "lx" , "H": "h", "F":"f","EE":"ee","New Brunsquick 1 Shuttle":"w1","New Brunsquick 2 Shuttle":"w2"}
@@ -72,8 +72,7 @@ def calculate_optimum_path(DG,paths):
 				curr_stop = curr_path[y]
 				common_busses = set(AP_BusesAt(curr_stop)).intersection(set(AP_BusesAt(curr_path[y+1])))
 				bus = ap_best_bus(curr_stop,common_busses,ETA)
-				print "Predictions beyond accurate scope!"
-				if not bus: raise StopIteration
+				if not bus: print "Predictions beyond accurate scope!";raise StopIteration
 				max_ap = ETA = float(bus['time'])+DG[curr_stop][curr_path[y+1]]['weight']
 				if super_min<ETA: raise StopIteration
 				best_all.append(bus)
@@ -103,8 +102,8 @@ def fetchMinPred(preds, DAT):
 
 def get_best_path(init_dest, final_dest):
 #	DG = makeDiGraph()
-#	SaveGraph(DG, "data/ap_graph.json")
-	DG = LoadGraph("data/ap_graph.json")
+#	SaveGraph(DG, "Data/ap_graph.json")
+	DG = LoadGraph("Data/ap_graph.json")
 	paths = findroutes(DG, init_dest, final_dest) 
 	best_path = calculate_optimum_path(DG,paths)
 	return json.dumps(best_path);

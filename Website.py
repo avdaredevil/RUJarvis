@@ -7,7 +7,7 @@ import os
 SharedMem = ""
 title = "RU Jarvis - AI Navigation System"
 app = Flask("app")
-stops = json.load(open('data/stops.ap.json'))
+stops = json.load(open('Data/stops.ap.json'))
 
 @app.route('/')
 @app.route('/index')
